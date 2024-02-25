@@ -83,7 +83,7 @@ export async function fetchCardData() {
     };
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch card data.');
+    //throw new Error('Failed to fetch card data.');
   }
 }
 
@@ -183,7 +183,7 @@ export async function fetchCustomers() {
     return customers;
   } catch (err) {
     console.error('Database Error:', err);
-    throw new Error('Failed to fetch all customers.');
+    //throw new Error('Failed to fetch all customers.');
   }
 }
 
