@@ -6,29 +6,33 @@ import {
 } from '@/app/lib/definitions'; // Assurez-vous que le chemin d'importation est correct
 import { CreateCustomer } from '@/app/ui/customers/buttons';
 import CustomersTable from '@/app/ui/customers/table'; // Assurez-vous que le chemin d'importation est correct
-import React from 'react';
+import Search from '@/app/ui/search';
+import React, { useEffect, useState } from 'react';
 
-interface ClientPageProps {
-  customers: CustomersTableType[]; // Assurez-vous que les données récupérées sont un tableau de CustomersTableType
-}
-
-function formatCustomersData(
-  customers: CustomersTableType[],
-): FormattedCustomersTable[] {
-  return customers.map((customer) => ({
-    ...customer,
-    total_pending: customer.total_pending.toString(), // Convertir total_pending en string
-    total_paid: customer.total_paid.toString(), // Convertir total_paid en string
-  }));
-}
 // Composition de la page ClientPage
-const ClientPage = ({ customers }: ClientPageProps) => {
-  const formattedCustomers = formatCustomersData(customers);
+const ClientPage = () => {
+  const [filteredCustomers, setFilteredCustomers] = useState<
+    FormattedCustomersTable[]
+  >([]);
+
+  const handleSearch = async (term: string) => {
+    try {
+      const customers = await fetchFilteredCustomers(term);
+      setFilteredCustomers(customers);
+    } catch (error) {
+      console.error('Failed to fetch filtered customers:', error);
+    }
+  };
+
+  useEffect(() => {
+    handleSearch('');
+  }, []);
   return (
     <div>
       <h1>Table des Clients</h1>
-      <CreateCustomer/>
-      <CustomersTable customers={formattedCustomers} />
+      <Search placeholder="Search for customers..." onSearch={handleSearch} />
+      <CreateCustomer />
+      <CustomersTable customers={filteredCustomers} />
     </div>
   );
 };
