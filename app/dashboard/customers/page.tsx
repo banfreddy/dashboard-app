@@ -30,7 +30,7 @@ const ClientPage = () => {
   }, []);
   return (
     <div>
-      <h1>Table des Clients</h1>
+      <h1 className="text-4xl">Table des Clients</h1>
       <Search placeholder="Search for customers..." onSearch={handleSearch} />
       <CreateCustomer />
       <CustomersTable customers={filteredCustomers} />
