@@ -1,3 +1,4 @@
+'use client';
 // Importations
 import { fetchFilteredCustomers } from '@/app/lib/data';
 import {
